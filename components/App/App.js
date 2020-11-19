@@ -38,11 +38,11 @@ class App extends React.Component {
         <div className="App">
           <Switch>
             <Route path="/" exact>
-              {({ history }) => <TweetsPage history={history} />}
+              {({ history }) => <AdsPage history={history} />}
             </Route>
-            <PrivateRoute path="/tweet" exact>
+            {/* <PrivateRoute path="/tweet" exact>
               <NewTweetPage />
-            </PrivateRoute>
+            </PrivateRoute> */}
             <Route path="/tweet/:tweetId" exact component={TweetPage} />
             <Route path="/login" exact>
               {({ history }) => (
