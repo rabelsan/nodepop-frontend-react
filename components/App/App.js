@@ -43,7 +43,7 @@ class App extends React.Component {
             {/* <PrivateRoute path="/tweet" exact>
               <NewTweetPage />
             </PrivateRoute> */}
-            <Route path="/tweet/:tweetId" exact component={TweetPage} />
+            {/*<Route path="/tweet/:tweetId" exact component={AdPage} />*/}
             <Route path="/login" exact>
               {({ history }) => (
                 <LoginPage onLogin={this.handleLogin} history={history} />
