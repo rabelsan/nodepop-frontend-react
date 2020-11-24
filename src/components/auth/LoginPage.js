@@ -3,6 +3,7 @@ import T from 'prop-types';
 
 import Button from '../shared/Button';
 import FormField from '../shared/FormField';
+import { Checkbox } from 'antd';
 import { login } from '../../api/auth';
 
 import './LoginPage.css';
@@ -12,6 +13,7 @@ class LoginPage extends React.Component {
     form: {
       email: '',
       password: '',
+      remember: false,
     },
     submitting: false,
     error: null,
@@ -20,6 +22,12 @@ class LoginPage extends React.Component {
   handleChange = event => {
     this.setState(state => ({
       form: { ...state.form, [event.target.name]: event.target.value },
+    }));
+  };
+
+  handleCbChange = event => {
+    this.setState(state => ({
+      form: { ...state.form, [event.target.name]: event.target.checked },
     }));
   };
 
@@ -37,10 +45,6 @@ class LoginPage extends React.Component {
     }
   };
 
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
-  }
-
   canSubmit = () => {
     const {
       form: { email, password },
@@ -51,13 +55,13 @@ class LoginPage extends React.Component {
 
   render() {
     const {
-      form: { email, password },
+      form: { email, password, remember },
       error,
     } = this.state;
 
     return (
       <div className="loginPage">
-        <h1 className="loginPage-title">Log in to Twitter</h1>
+        <h1 className="loginPage-title">Log in to Nodepop</h1>
         <form onSubmit={this.handleSubmit}>
           <FormField
             type="text"
@@ -75,6 +79,16 @@ class LoginPage extends React.Component {
             value={password}
             onChange={this.handleChange}
           />
+          <Checkbox
+            name="remember"
+            label="Remember me"
+            className="loginPage-field"
+            checked={remember}
+            value={remember}
+            onChange={this.handleCbChange}
+          >
+            Remember me
+          </Checkbox>
           <Button
             type="submit"
             className="loginPage-submit"
