@@ -1,73 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import AdsPage from '../adverts/AdsPage';
+import NewAdPage from '../adverts/NewAdPage';
 import LoginPage from '../auth/LoginPage';
 import PrivateRoute from '../auth/PrivateRoute';
 import { AuthContextProvider } from '../auth/context';
+import Advert from '../adverts/Advert';
 
-class App extends React.Component {
-  tweetsPageRef = React.createRef();
-  loginPageRef = React.createRef();
-  state = {
-    loggedUserId: this.props.initiallyLooggedUserId,
-  };
+function App ( { initiallyLooggedUserId}) {
+    const [loggedUserId, setLoggedUserId] = useState(initiallyLooggedUserId);
+  
 
-  handleLogin = (loggedUserId, cb) => this.setState({ loggedUserId }, cb);
+  const handleLogin = loggedUserId => 
+    setLoggedUserId(loggedUserId);
 
-  handleLogout = () => this.setState({ loggedUserId: null });
+  const handleLogout = () => setLoggedUserId(null);
 
-  componentDidMount() {
-    // console.log(this.tweetsPageRef);
-    // if (this.tweetsPageRef.current) {
-    //   this.tweetsPageRef.current.getTweets();
-    // }
-  }
-
-  render() {
-    const { loggedUserId } = this.state;
-    return (
-      <AuthContextProvider
-        value={{
-          isLogged: !!loggedUserId,
-          onLogin: this.handleLogin,
-          onLogout: this.handleLogout,
-        }}
-      >
-        <div className="App">
-          <Switch>
-            <Route path="/" exact>
-              {({ history }) => <AdsPage history={history} />}
-            </Route>
-            {/* <PrivateRoute path="/tweet" exact>
-              <NewTweetPage />
-            </PrivateRoute> */}
-            {/*<Route path="/tweet/:tweetId" exact component={AdPage} />*/}
-            <Route path="/login" exact>
-              {({ history }) => (
-                <LoginPage onLogin={this.handleLogin} history={history} />
-              )}
-            </Route>
-            <Route path="/404" exact>
-              <div
-                style={{
-                  textAlign: 'center',
-                  fontSize: 48,
-                  fontWeight: 'bold',
-                }}
-              >
-                404 | Not found page
-              </div>
-            </Route>
-            <Route>
-              <Redirect to="/404" />
-            </Route>
-          </Switch>
-        </div>
-      </AuthContextProvider>
-    );
-  }
+  return (
+    <AuthContextProvider
+      value={{
+        isLogged: !!loggedUserId,
+        onLogin: handleLogin,
+        onLogout: handleLogout,
+      }}
+    >
+      <div className="App">
+        <Switch>
+          <PrivateRoute path="/" exact>
+            <AdsPage/>
+          </PrivateRoute>
+          <PrivateRoute path="/ad" exact>
+              <NewAdPage />
+          </PrivateRoute>
+          <Route path="/adverts/:adId" exact component={Advert} />
+          <Route path="/login" exact>
+            {({ history }) => (
+              <LoginPage onLogin={handleLogin} history={history} />
+            )}
+          </Route>
+          <Route path="/404" exact>
+            <div
+              style={{
+                textAlign: 'center',
+                fontSize: 48,
+                fontWeight: 'bold',
+              }}
+            >
+              404 | Not found page
+            </div>
+          </Route>
+          <Route>
+            <Redirect to="/404" />
+          </Route>
+        </Switch>
+      </div>
+    </AuthContextProvider>
+  );
 }
 
 App.propTypes = {
