@@ -9,12 +9,15 @@ import PrivateRoute from '../auth/PrivateRoute';
 import { AuthContextProvider } from '../auth/context';
 import Advert from '../adverts/Advert';
 
-function App ( { initiallyLoggedUserId }) {
+function App ({ initiallyLoggedUserId }) {
   const [loggedUserId, setLoggedUserId] = useState(initiallyLoggedUserId);
   
   const handleLogin = loggedUserId => 
-    setLoggedUserId(loggedUserId);
-
+    new Promise(resolve => {
+      setLoggedUserId(loggedUserId);
+      resolve()
+    });
+  
   const handleLogout = () => setLoggedUserId(null);
 
   return (

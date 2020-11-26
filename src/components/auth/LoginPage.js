@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 
 import Button from '../shared/Button';
@@ -17,7 +17,7 @@ function LoginPage({ onLogin, history }) {
   const { email, password, remember } = form;
 
   const handleSubmit = async event => {
-    const credentials = form;
+    //const credentials = form;
     event.preventDefault();
     setSubmitting(true);
     try {
@@ -25,7 +25,8 @@ function LoginPage({ onLogin, history }) {
       setError(null);
       onLogin(loggedUserId).then(() => history.push('/adverts'));
     } catch (error) {
-      this.setError(error);
+      console.log(error);
+      setError(error);
     } finally {
       setSubmitting(false);
     }
