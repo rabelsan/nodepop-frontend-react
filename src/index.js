@@ -8,9 +8,9 @@ import { configureClient } from './api/client';
 
 import './index.css';
 
-const auth = storage.get('auth') || { id: null, accessToken: null };
+const auth = storage.get('auth') || { token: null };
 
-configureClient(auth.accessToken);
+configureClient(auth.token);
 
 class ErrorBoundary extends React.Component {
   state = {
@@ -35,7 +35,7 @@ class ErrorBoundary extends React.Component {
 ReactDOM.render(
   <ErrorBoundary>
     <BrowserRouter>
-      <App initiallyLooggedUserId={auth.id} />
+      <App initiallyLoggedUserId={auth.token} />
     </BrowserRouter>
   </ErrorBoundary>,
   document.getElementById('root')

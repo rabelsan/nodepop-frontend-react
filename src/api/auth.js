@@ -4,9 +4,13 @@ import storage from '../utils/storage';
 
 export const login = crendentials =>
   client.login(crendentials).then(auth => {
-    const { id, accessToken } = auth;
-    storage.set('auth', { id, accessToken });
-    return auth.id;
+    const { token } = auth;
+    if (crendentials.remember) {
+      storage.set('auth', { token });
+    } else {
+      storage.remove('auth');
+    }
+    return auth.token;
   });
 
 export const logout = () =>

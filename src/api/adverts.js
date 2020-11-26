@@ -1,18 +1,16 @@
 import client from './client';
 
-const adsBaseUrl = '/apiv1';
-
 export const getLatestAds = () => {
-  const url = `${adsBaseUrl}/adverts?sort=_id&order=desc`;
+  const url = `/adverts`;
   return client.get(url);
 };
 
 export const getAdDetail = adId => {
-  const url = `${adsBaseUrl}/adverts/${adId}`;
+  const url = `/adverts/${adId}`;
   return client.get(url);
 };
 
 export const createAd = ad => {
-  const url = `${adsBaseUrl}/adverts`;
+  const url = `/adverts`;
   return client.post(url, ad);
 };

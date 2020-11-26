@@ -20,11 +20,11 @@ const Header = ({ className, ...props }) => {
       <nav className="header-nav">
         <Button
           as={Link}
-          to="/tweet"
+          to="/ad"
           variant="primary"
           className="header-button"
         >
-          Tweet
+          Avertisement
         </Button>
         {isLogged ? (
           <Button

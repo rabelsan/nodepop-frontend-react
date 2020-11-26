@@ -1,107 +1,82 @@
-import React from 'react';
+import React, {useState} from 'react';
 import T from 'prop-types';
 
 import Button from '../shared/Button';
 import FormField from '../shared/FormField';
 import { Checkbox } from 'antd';
 import { login } from '../../api/auth';
+import useForm from '../../hooks/useForm';
 
 import './LoginPage.css';
 
-class LoginPage extends React.Component {
-  state = {
-    form: {
-      email: '',
-      password: '',
-      remember: false,
-    },
-    submitting: false,
-    error: null,
-  };
+function LoginPage({ onLogin, history }) {
+  const [form, onChange] = useForm({email: '', password: '', remember: false})
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
-  handleChange = event => {
-    this.setState(state => ({
-      form: { ...state.form, [event.target.name]: event.target.value },
-    }));
-  };
+  const { email, password, remember } = form;
 
-  handleCbChange = event => {
-    this.setState(state => ({
-      form: { ...state.form, [event.target.name]: event.target.checked },
-    }));
-  };
-
-  handleSubmit = async event => {
-    const { onLogin, history } = this.props;
-    const { form: crendentials } = this.state;
+  const handleSubmit = async event => {
+    const credentials = form;
     event.preventDefault();
-    this.setState({ submitting: true });
+    setSubmitting(true);
     try {
-      const loggedUserId = await login(crendentials);
-      this.setState({ submitting: false, error: null });
-      onLogin(loggedUserId, () => history.push('/tweet'));
+      const loggedUserId = await login(form);
+      setError(null);
+      onLogin(loggedUserId).then(() => history.push('/adverts'));
     } catch (error) {
-      this.setState({ submitting: false, error });
+      this.setError(error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  canSubmit = () => {
-    const {
-      form: { email, password },
-      submitting,
-    } = this.state;
+  const canSubmit = () => {
     return !submitting && email && password;
   };
 
-  render() {
-    const {
-      form: { email, password, remember },
-      error,
-    } = this.state;
-
-    return (
-      <div className="loginPage">
-        <h1 className="loginPage-title">Log in to Nodepop</h1>
-        <form onSubmit={this.handleSubmit}>
-          <FormField
-            type="text"
-            name="email"
-            label="phone, email or username"
-            className="loginPage-field"
-            value={email}
-            onChange={this.handleChange}
-          />
-          <FormField
-            type="password"
-            name="password"
-            label="password"
-            className="loginPage-field"
-            value={password}
-            onChange={this.handleChange}
-          />
-          <Checkbox
-            name="remember"
-            label="Remember me"
-            className="loginPage-field"
-            checked={remember}
-            value={remember}
-            onChange={this.handleCbChange}
-          >
-            Remember me
-          </Checkbox>
-          <Button
-            type="submit"
-            className="loginPage-submit"
-            variant="primary"
-            disabled={!this.canSubmit()}
-          >
-            Log in
-          </Button>
-        </form>
-        {error && <div className="loginPage-error">{error.message}</div>}
-      </div>
-    );
-  }
+  return (
+    <div className="loginPage">
+      <h1 className="loginPage-title">Log in to Nodepop</h1>
+      <form onSubmit={handleSubmit}>
+        <FormField
+          type="text"
+          name="email"
+          label="phone, email or username"
+          className="loginPage-field"
+          value={email}
+          onChange={onChange}
+        />
+        <FormField
+          type="password"
+          name="password"
+          label="password"
+          className="loginPage-field"
+          value={password}
+          onChange={onChange}
+        />
+        <Checkbox
+          name="remember"
+          label="Remember me"
+          className="loginPage-field"
+          checked={remember}
+          value={remember}
+          onChange={onChange}
+        >
+          Remember me
+        </Checkbox>
+        <Button
+          type="submit"
+          className="loginPage-submit"
+          variant="primary"
+          disabled={!canSubmit()}
+        >
+          Log in
+        </Button>
+      </form>
+      {error && <div className="loginPage-error">{error.message}</div>}
+    </div>
+  );
 }
 
 LoginPage.propTypes = {

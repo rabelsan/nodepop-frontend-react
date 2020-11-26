@@ -1,28 +1,28 @@
 import React from 'react';
+
 import T from 'prop-types';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 import './Advert.css';
- 
-const Advert = ({ user, createdAt, content, history, id }) => (
+
+const Advert = ({ foto, nombre,  precio, tags, venta, _id, history }) => (
+  
   <article
     className="advert bordered"
-    onClick={() => history.push(`/adverts/${id}`)}
+    onClick={() => history.push(`/adverts/${_id}`)}
   >
     <div className="left">
       {/* <Photo src={defaultPhoto} className="advert-photo" /> */}
     </div>
     <div className="right">
       <div className="advert-header">
-        <span className="advert-name">{user.name}</span>
-        <span className="advert-username">{user.username}</span>
+        <span className="advert-sale">{venta}</span>
+        <span className="advert-name">{nombre}</span>
+        <span className="advert-price">{precio}</span>
+        <span className="advert-photo">{foto}</span>
         <span className="advert-separator">·</span>
-        <time dateTime={createdAt}>
-          {formatDistanceToNow(new Date(createdAt))}
-        </time>
       </div>
       <div>
-        {content}
+        {tags}
         <div className="advert-actions"></div>
       </div>
     </div>
@@ -30,10 +30,11 @@ const Advert = ({ user, createdAt, content, history, id }) => (
 );
 
 Advert.propTypes = {
-  user: T.shape({ name: T.string.isRequired, username: T.string.isRequired })
-    .isRequired,
-  createdAt: T.string.isRequired,
-  content: T.string,
+  foto: T.string,
+  nombre: T.string.isRequired,
+  precio: T.number.isRequired,
+  tags: T.array.isRequired,
+  venta: T.bool.isRequired,
   history: T.shape({ push: T.func.isRequired }).isRequired,
 };
 

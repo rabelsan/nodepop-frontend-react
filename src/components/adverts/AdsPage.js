@@ -21,14 +21,14 @@ function AdsPage() {
     if (!ads) {
       return null;
     }
-    return ads.map(ad => (
-      <Advert key={ad.id} {...ad} history={history} />
+    return ads.result.rows.map(ad => (
+      <Advert key={ad._id} {...ad} history= {history} />
     ));
   };
 
   return (
-    <Layout title="What's going on...">
-      <div className="tweetsPage">{renderContent()}</div>
+    <Layout title="Advertisements list...">
+      <div className="adsPage">{renderContent()}</div>
     </Layout>
   );
 }

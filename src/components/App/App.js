@@ -9,10 +9,9 @@ import PrivateRoute from '../auth/PrivateRoute';
 import { AuthContextProvider } from '../auth/context';
 import Advert from '../adverts/Advert';
 
-function App ( { initiallyLooggedUserId}) {
-    const [loggedUserId, setLoggedUserId] = useState(initiallyLooggedUserId);
+function App ( { initiallyLoggedUserId }) {
+  const [loggedUserId, setLoggedUserId] = useState(initiallyLoggedUserId);
   
-
   const handleLogin = loggedUserId => 
     setLoggedUserId(loggedUserId);
 
@@ -29,6 +28,9 @@ function App ( { initiallyLooggedUserId}) {
       <div className="App">
         <Switch>
           <PrivateRoute path="/" exact>
+            <Redirect to="/adverts" />
+          </PrivateRoute>
+          <PrivateRoute path="/adverts" exact>
             <AdsPage/>
           </PrivateRoute>
           <PrivateRoute path="/ad" exact>
