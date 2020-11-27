@@ -3,11 +3,12 @@ import T from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import AdsPage from '../adverts/AdsPage';
+import AdPage from '../adverts/AdPage';
 import NewAdPage from '../adverts/NewAdPage';
+import DelAdPage from '../adverts/DelAdPage';
 import LoginPage from '../auth/LoginPage';
 import PrivateRoute from '../auth/PrivateRoute';
 import { AuthContextProvider } from '../auth/context';
-import Advert from '../adverts/Advert';
 
 function App ({ initiallyLoggedUserId }) {
   const [loggedUserId, setLoggedUserId] = useState(initiallyLoggedUserId);
@@ -36,10 +37,11 @@ function App ({ initiallyLoggedUserId }) {
           <PrivateRoute path="/adverts" exact>
             <AdsPage/>
           </PrivateRoute>
-          <PrivateRoute path="/ad" exact>
+          <PrivateRoute path="/newAd" exact>
               <NewAdPage />
           </PrivateRoute>
-          <Route path="/adverts/:adId" exact component={Advert} />
+          <PrivateRoute path="/delAd/:adId" exact component={DelAdPage} />
+          <PrivateRoute path="/adverts/:adId" exact component={AdPage} />
           <Route path="/login" exact>
             {({ history }) => (
               <LoginPage onLogin={handleLogin} history={history} />

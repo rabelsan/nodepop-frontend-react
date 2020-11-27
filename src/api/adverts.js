@@ -14,3 +14,10 @@ export const createAd = ad => {
   const url = `/adverts`;
   return client.post(url, ad);
 };
+
+export const deleteAd = adId => {
+  const url = `/adverts/${adId}`;
+  return client.delete(url);
+};
+
+

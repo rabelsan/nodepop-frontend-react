@@ -7,16 +7,12 @@
   align-items: center;
   background-color: transparent;
   border-radius: 9999px;
-  color: rgba(29, 161, 242, 1);
+  color: rgb(98,  189, 89);
   display: inline-flex;
-  height: 48px;
+  height: 64px;
   justify-content: center;
   transition: background-color 0.2s;
-  width: 48px;
-}
-
-.header-logo:hover {
-  background-color: rgba(29, 161, 242, 0.1);
+  width:64px;
 }
 
 .header-nav {

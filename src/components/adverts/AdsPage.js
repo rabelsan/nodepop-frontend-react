@@ -7,14 +7,12 @@ import Advert from './Advert';
 
 function AdsPage() {
   const [ads, setAds] = useState(null);
+  const [error, setError] = useState(null);
   const history = useHistory();
 
   useEffect(() => {
-    getLatestAds().then(setAds);
-    return () => {
-      // cancel request
-      console.log('cancel request');
-    };
+    getLatestAds().then(setAds).catch(setError);
+    return console.log(error ? error : 'request completed');
   }, []);
 
   const renderContent = () => {

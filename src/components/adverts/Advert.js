@@ -4,8 +4,7 @@ import T from 'prop-types';
 
 import './Advert.css';
 
-const Advert = ({ foto, nombre,  precio, tags, venta, _id, history }) => (
-  
+const Advert = ({ photo, name,  price, tags, sale, _id, history }) => (
   <article
     className="advert bordered"
     onClick={() => history.push(`/adverts/${_id}`)}
@@ -15,10 +14,10 @@ const Advert = ({ foto, nombre,  precio, tags, venta, _id, history }) => (
     </div>
     <div className="right">
       <div className="advert-header">
-        <span className="advert-sale">{venta}</span>
-        <span className="advert-name">{nombre}</span>
-        <span className="advert-price">{precio}</span>
-        <span className="advert-photo">{foto}</span>
+        <span className="advert-sale">{sale ? 'On sale' : 'To buy'}</span>
+        <span className="advert-name">{name}</span>
+        <span className="advert-price">{price}</span>
+        <span className="advert-photo">{photo}</span>
         <span className="advert-separator">·</span>
       </div>
       <div>

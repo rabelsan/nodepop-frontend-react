@@ -14,17 +14,17 @@ const Header = ({ className, ...props }) => {
     <header className={classNames('header', className)} {...props}>
       <Link to="/">
         <div className="header-logo">
-          <Icon width="32" height="32" />
+          <Icon width="128" height="128" />
         </div>
       </Link>
       <nav className="header-nav">
         <Button
           as={Link}
-          to="/ad"
+          to="/advert"
           variant="primary"
           className="header-button"
         >
-          Avertisement
+          New Avertisement
         </Button>
         {isLogged ? (
           <Button
