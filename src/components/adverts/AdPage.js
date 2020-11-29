@@ -15,7 +15,6 @@ function AdPage (props) {
   const [ad, setAd] = useState(null);
   const [error, setError] = useState(null);
   const { REACT_APP_BACK_URL: urlBackend} = process.env;
-  console.log(process.env);
   
   useEffect(() => {
     getAdDetail(adId).then(setAd).catch(setError);
@@ -40,7 +39,7 @@ function AdPage (props) {
 
   const renderContent = () => {
     if (!ad) {
-      return null;
+      return <div>Advert id '{adId}'.... NOT FOUND!</div>;
     }
     return (
         <React.Fragment>

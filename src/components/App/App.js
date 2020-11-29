@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import AdsPage from '../adverts/AdsPage';
 import AdPage from '../adverts/AdPage';
+import AdTags from '../adverts/AdTags';
 import NewAdPage from '../adverts/NewAdPage';
 import LoginPage from '../auth/LoginPage';
 import PrivateRoute from '../auth/PrivateRoute';
@@ -37,8 +38,9 @@ function App ({ initiallyLoggedUserId }) {
             <AdsPage/>
           </PrivateRoute>
           <PrivateRoute path="/newAd" exact>
-              <NewAdPage />
+            <NewAdPage />
           </PrivateRoute>
+          <PrivateRoute path="/adverts/tags" exact component={AdTags}/>
           <PrivateRoute path="/adverts/:adId" exact component={AdPage} />
           <Route path="/login" exact>
             {({ history }) => (

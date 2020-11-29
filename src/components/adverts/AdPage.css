@@ -27,3 +27,7 @@
 .advert-details:hover {
     background-color: white;
 }
+
+.advert-item {
+    margin: 5px;
+}
