@@ -7,7 +7,7 @@ import 'antd/dist/antd.css';
 import { getAdDetail } from '../../api/adverts';
 import { deleteAd } from '../../api/adverts';
 
-import FlexBox from './styles.js';
+import {FlexBoxCol} from './styles.js';
 import './AdPage.css';
 
 function AdPage (props) {
@@ -20,6 +20,7 @@ function AdPage (props) {
   useEffect(() => {
     getAdDetail(adId).then(setAd).catch(setError);
     return console.log(error ? error : 'request completed');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleClickDelete(event) {
@@ -47,7 +48,7 @@ function AdPage (props) {
             <article className="advert-details">
               <div>
                 <h4>{ad.result.name}</h4>
-                <h3>{ad.result.sale ? 'On sale' : 'To buy'}</h3>
+                <h3>{ad.result.sale ? 'For sale' : 'To buy'}</h3>
                 <h4>Price: {ad.result.price}</h4>
                 <h5>Tags:{ad.result.tags.map(tag => ` ${tag}`)}</h5>
               </div>
@@ -57,7 +58,7 @@ function AdPage (props) {
             </article>
           </div>
           <div>
-            <FlexBox>
+            <FlexBoxCol>
               < Popconfirm 
                 title=" Are you sure delete this advertisement? "
                 name="delete"
@@ -68,7 +69,7 @@ function AdPage (props) {
               >
                 <Button variant="primary"> Delete</Button>
               </Popconfirm>
-            </FlexBox>
+            </FlexBoxCol>
           </div>
         </React.Fragment>
     );

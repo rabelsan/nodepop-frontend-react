@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FlexBox = styled.div`
+export const FlexBoxCol = styled.div`
   margin: 20px;
   padding: 20px;
   border: none;
@@ -14,4 +14,16 @@ const FlexBox = styled.div`
   }
 `;
 
-export default FlexBox;
+export const FlexBoxRow = styled.div`
+  margin: 20px;
+  padding: 20px;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  > div {
+    margin: 20px;
+  }
+`;

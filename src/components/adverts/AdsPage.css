@@ -1,7 +1,14 @@
 .adverts-list {
-    display: grid-inline;
-    grid-gap: 0.5rem;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
+    display: flex;
+    flex-basis: min-content;
+    flex-direction: row;
+    justify-items:start;
+    align-items:flex-start;
+}
+
+.slider {
+    height: 30px;
+    width: 300px;
+    margin: 10px 1px;
 }
  

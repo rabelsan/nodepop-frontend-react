@@ -10,7 +10,7 @@
   border-left-width: 1px;
   border-right-width: 1px;
   margin: 0 auto;
-  max-width: 660px;
+  max-width: 90vw;
   min-height: calc(100vh - 128px);
 }
 
