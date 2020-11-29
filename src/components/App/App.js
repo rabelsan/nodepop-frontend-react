@@ -5,7 +5,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import AdsPage from '../adverts/AdsPage';
 import AdPage from '../adverts/AdPage';
 import NewAdPage from '../adverts/NewAdPage';
-import DelAdPage from '../adverts/DelAdPage';
 import LoginPage from '../auth/LoginPage';
 import PrivateRoute from '../auth/PrivateRoute';
 import { AuthContextProvider } from '../auth/context';
@@ -40,7 +39,6 @@ function App ({ initiallyLoggedUserId }) {
           <PrivateRoute path="/newAd" exact>
               <NewAdPage />
           </PrivateRoute>
-          <PrivateRoute path="/delAd/:adId" exact component={DelAdPage} />
           <PrivateRoute path="/adverts/:adId" exact component={AdPage} />
           <Route path="/login" exact>
             {({ history }) => (

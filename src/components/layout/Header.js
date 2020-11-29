@@ -24,7 +24,7 @@ const Header = ({ className, ...props }) => {
           variant="primary"
           className="header-button"
         >
-          New Avertisement
+          New Advert
         </Button>
         {isLogged ? (
           <Button

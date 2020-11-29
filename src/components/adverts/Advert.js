@@ -1,39 +1,37 @@
 import React from 'react';
-
 import T from 'prop-types';
 
+import 'antd/dist/antd.css';
+import { Card, Col, Row } from 'antd';
 import './Advert.css';
+
+const { Meta } = Card;
+
 
 const Advert = ({ photo, name,  price, tags, sale, _id, history }) => (
   <article
-    className="advert bordered"
+    className="advert"
     onClick={() => history.push(`/adverts/${_id}`)}
   >
-    <div className="left">
-      {/* <Photo src={defaultPhoto} className="advert-photo" /> */}
-    </div>
-    <div className="right">
-      <div className="advert-header">
-        <span className="advert-sale">{sale ? 'On sale' : 'To buy'}</span>
-        <span className="advert-name">{name}</span>
-        <span className="advert-price">{price}</span>
-        <span className="advert-photo">{photo}</span>
-        <span className="advert-separator">·</span>
-      </div>
-      <div>
-        {tags}
-        <div className="advert-actions"></div>
-      </div>
+    <div className="site-card-wrapper">
+      <Card>
+        <Meta 
+          title={sale ? `For sale ${name}`: `To buy ${name}`}  
+          //style={{font-: "bold"}}
+        />
+          <h4>Price: {price}</h4>
+          Tags:{tags.map(tag => ` ${tag}`)}
+      </Card>
     </div>
   </article>
 );
 
 Advert.propTypes = {
-  foto: T.string,
-  nombre: T.string.isRequired,
-  precio: T.number.isRequired,
+  photo: T.string,
+  name: T.string.isRequired,
+  price: T.number.isRequired,
   tags: T.array.isRequired,
-  venta: T.bool.isRequired,
+  sale: T.bool.isRequired,
   history: T.shape({ push: T.func.isRequired }).isRequired,
 };
 

@@ -1,0 +1,7 @@
+.adverts-list {
+    display: grid-inline;
+    grid-gap: 0.5rem;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+ 

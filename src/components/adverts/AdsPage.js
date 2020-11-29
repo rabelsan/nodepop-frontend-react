@@ -5,6 +5,8 @@ import { getLatestAds } from '../../api/adverts';
 import Layout from '../layout';
 import Advert from './Advert';
 
+import './AdsPage.css';
+
 function AdsPage() {
   const [ads, setAds] = useState(null);
   const [error, setError] = useState(null);
@@ -26,7 +28,7 @@ function AdsPage() {
 
   return (
     <Layout title="Advertisements list...">
-      <div className="adsPage">{renderContent()}</div>
+      <div className="adverts-list">{renderContent()}</div>
     </Layout>
   );
 }

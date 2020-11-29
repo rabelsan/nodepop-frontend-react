@@ -1,4 +1,29 @@
-.delete-button {
-    display: flex;
-    justify-content: center;
+.advert-details {
+    display: grid;
+    grid-gap: 0.5rem;
+    grid-template-columns: 40vw 50vw;
+    grid-template-rows: auto;
+    grid-template-areas: "content image";
+}
+
+.content {
+    padding: 0.5rem 0.5rem;    
+}
+
+.img-frame {
+    height: 30vw;
+    width: 40vw;
+}
+
+.image {
+    padding: 1rem 1rem;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.advert-details {
+    cursor: none;
+}
+.advert-details:hover {
+    background-color: white;
 }

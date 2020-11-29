@@ -34,3 +34,8 @@
   .advert-separator {
     padding: 0 5px;
   }
+
+  .site-card-wrapper {
+    padding: 30px;
+    background: #ececec;
+  }

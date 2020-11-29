@@ -1,1 +1,2 @@
 REACT_APP_API_BASE_URL=<url_backend:PORT/api_root_path>
+REACT_APP_BACK_URL=<url_backend:PORT/>
