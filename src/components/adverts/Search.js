@@ -25,7 +25,8 @@ function Search() {
   const maxRange = 100000;
   let slider = [minRange,maxRange];
   let history = useHistory();
-  const children = [];
+  let children = [];
+  let tagsList = '';
    
 
   useEffect(() => {
@@ -38,7 +39,7 @@ function Search() {
   useEffect(() => {
     if (tags) {
       for (let i = 0; i < tags.result.length; i++ ) {
-        children.push(<Option key={i}>{tags.result[i]}</Option>);
+        children.push(<Option key={tags.result[i]}>{tags.result[i]}</Option>);
       }
       setOptions(children);
     }
@@ -50,12 +51,12 @@ function Search() {
   
   function handleClickSearch(event) {
     setSubmitting(true);
-    history.push(`/adverts?price=${slider[0]}-${slider[1]}${form.name ? `&name=${form.name}`: ''}`);
+    history.push(`/adverts?price=${slider[0]}-${slider[1]}${form.name ? `&name=${form.name}`: ''}${(tagsList.length>0) ? `&tags=${tagsList}`: ''}`);
     setSubmitting(false);
   }
 
   function handleSelectChange(value) {
-    console.log(`selected ${value}`);
+    tagsList=value;
   }
   
   return (
