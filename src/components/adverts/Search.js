@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { getAdsTags } from '../../api/adverts';
-import { Input, Radio, Select } from 'antd';
 import 'antd/dist/antd.css';
+import { Input, Radio, Select } from 'antd';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Button from '../../components/shared/Button';
@@ -13,12 +13,13 @@ import {FlexBoxCol, FlexBoxRow} from './styles.js';
 
 const SliderTooltip = Slider.createSliderWithTooltip;
 const Range = SliderTooltip(Slider.Range);
-const {Option} = Select;
+const { Option } = Select;
 
 function Search() {
   const [form, handleChange] = useForm({name: '', slider: [], tags: [], sale: true});
   const [submitting, setSubmitting] = useState(false);
   const [tags, setTags] = useState(null);
+  const [options, setOptions] = useState([]);
 
   const minRange = 0;
   const maxRange = 100000;
@@ -36,9 +37,10 @@ function Search() {
 
   useEffect(() => {
     if (tags) {
-    for (let i = 0; i < tags.result.length; i++ ) {
+      for (let i = 0; i < tags.result.length; i++ ) {
         children.push(<Option key={i}>{tags.result[i]}</Option>);
-    }
+      }
+      setOptions(children);
     }
   }, [tags]);
 
@@ -99,7 +101,7 @@ function Search() {
             defaultValue={[]}
             onChange={handleSelectChange}
           >
-            {children}
+            {options}
           </Select>
         </div>
       </FlexBoxRow>
