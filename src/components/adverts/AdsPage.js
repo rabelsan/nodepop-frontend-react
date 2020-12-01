@@ -15,7 +15,6 @@ function AdsPage() {
 
   useEffect(() => {
     let error=null;
-    const params = new URLSearchParams(history.location.pathname);
     getLatestAds().then(setAds).catch(error);
     return console.log(error ? error : 'Ads request completed');
     // eslint-disable-next-line react-hooks/exhaustive-deps

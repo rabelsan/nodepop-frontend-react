@@ -14,36 +14,37 @@ import {FlexBoxCol, FlexBoxRow} from './styles.js';
 const SliderTooltip = Slider.createSliderWithTooltip;
 const Range = SliderTooltip(Slider.Range);
 const { Option } = Select;
+const minRange = 0;
+const maxRange = 100000;
+let slider = [minRange,maxRange];
 
 function Search() {
-  const [form, handleChange] = useForm({name: '', slider: [], tags: [], sale: true});
+  const [form, handleChange] = useForm({name: '', slider: [], sale: 3});
   const [submitting, setSubmitting] = useState(false);
-  const [tags, setTags] = useState(null);
+  const [apiTags, setApiTags] = useState(null);
+  const [selTags, setSelTags] = useState([]);
   const [options, setOptions] = useState([]);
 
-  const minRange = 0;
-  const maxRange = 100000;
-  let slider = [minRange,maxRange];
   let history = useHistory();
   let children = [];
-  let tagsList = '';
-   
+  
 
   useEffect(() => {
     let error=null;   
-    getAdsTags().then(setTags).catch(error);
+    getAdsTags().then(setApiTags).catch(error);
     return console.log(error ? error : 'Tags request completed');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (tags) {
-      for (let i = 0; i < tags.result.length; i++ ) {
-        children.push(<Option key={tags.result[i]}>{tags.result[i]}</Option>);
+    if (apiTags) {
+      for (let i = 0; i < apiTags.result.length; i++ ) {
+        children.push(<Option key={apiTags.result[i]}>{apiTags.result[i]}</Option>);
       }
       setOptions(children);
     }
-  }, [tags]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiTags]);
 
   function onSliderChange (value) {
     form.slider=value;
@@ -51,12 +52,18 @@ function Search() {
   
   function handleClickSearch(event) {
     setSubmitting(true);
-    history.push(`/adverts?price=${slider[0]}-${slider[1]}${form.name ? `&name=${form.name}`: ''}${(tagsList.length>0) ? `&tags=${tagsList}`: ''}`);
+    let queryName = form.name ? `&name=${form.name}`: '';
+    let querySale = '';
+    if (form.sale<3) {
+      querySale = (form.sale<2) ? `&sale=true` : `&sale=false`;
+    }
+    let queryTags = (selTags.join(',').length) ? `&tags=${selTags.join(',')}`: '';
+    history.push(`/adverts?${queryName}${querySale}${queryTags}`);
     setSubmitting(false);
   }
 
   function handleSelectChange(value) {
-    tagsList=value;
+    setSelTags(value);
   }
   
   return (
@@ -91,16 +98,22 @@ function Search() {
           />  */}
         </div>
         <div>
-          <p>Sale/Buy</p>
-          <Radio name="sale" checked={form.sale} onChange={handleChange}>For sale</Radio>
+          {/* <Radio name="sale" checked={form.sale} onChange={handleChange}>For sale</Radio> */}
+          <p>Sale/Buy/All ads</p>
+          <Radio.Group name="sale" onChange={handleChange} value={form.sale}>
+            <Radio value={1}>For Sale</Radio>
+            <Radio value={2}>To Buy</Radio>
+            <Radio value={3}>All</Radio>
+          </Radio.Group>
           <p>Tags</p>
           <Select
             mode="multiple"
             allowClear
-            style={{ width: '100%' }}
-            placeholder="Please select"
+            style={{ width: '250px' }}
+            placeholder="Please select tags to filter"
             defaultValue={[]}
             onChange={handleSelectChange}
+            maxTagTextLength="10"
           >
             {options}
           </Select>

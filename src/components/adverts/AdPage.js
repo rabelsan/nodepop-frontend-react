@@ -52,7 +52,7 @@ function AdPage (props) {
                 <h5>Tags:{ad.result.tags.map(tag => ` ${tag}`)}</h5>
               </div>
               <div className="img-frame">
-                <img class='image' src={urlBackend + ad.result.photo} alt={urlBackend + ad.result.photo}/>
+                <img className='image' src={urlBackend + ad.result.photo} alt={urlBackend + ad.result.photo}/>
               </div>
             </article>
           </div>

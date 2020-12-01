@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
 import AdsPage from '../adverts/AdsPage';
 import AdPage from '../adverts/AdPage';
@@ -20,6 +20,11 @@ function App ({ initiallyLoggedUserId }) {
     });
   
   const handleLogout = () => setLoggedUserId(null);
+
+  const history = useHistory(); 
+  //const params = new URLSearchParams(history.location.search);
+  console.log('history.location.search: ',history.location.search);
+    
 
   return (
     <AuthContextProvider
