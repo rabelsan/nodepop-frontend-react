@@ -1,7 +1,7 @@
 import client from './client';
 
-export const getLatestAds = () => {
-  const url = `/adverts`;
+export const getLatestAds = (query) => {
+  const url = query.query;
   return client.get(url);
 };
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 
 import AdsPage from '../adverts/AdsPage';
 import AdPage from '../adverts/AdPage';
@@ -20,11 +20,8 @@ function App ({ initiallyLoggedUserId }) {
     });
   
   const handleLogout = () => setLoggedUserId(null);
-
-  const history = useHistory(); 
-  //const params = new URLSearchParams(history.location.search);
-  console.log('history.location.search: ',history.location.search);
-    
+  
+  const {pathname, search} = useLocation();
 
   return (
     <AuthContextProvider
@@ -40,13 +37,13 @@ function App ({ initiallyLoggedUserId }) {
             <Redirect to="/adverts" />
           </PrivateRoute>
           <PrivateRoute path="/adverts" exact>
-            <AdsPage/>
-          </PrivateRoute>
-          <PrivateRoute path="/newAd" exact>
-            <NewAdPage />
+            <AdsPage query={pathname + search}/>
           </PrivateRoute>
           <PrivateRoute path="/adverts/tags" exact component={AdTags}/>
           <PrivateRoute path="/adverts/:adId" exact component={AdPage} />
+          <PrivateRoute path="/newAd" exact>
+            <NewAdPage />
+          </PrivateRoute>
           <Route path="/login" exact>
             {({ history }) => (
               <LoginPage onLogin={handleLogin} history={history} />

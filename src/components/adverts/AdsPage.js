@@ -8,17 +8,16 @@ import Search from './Search';
 
 import './AdsPage.css';
 
-function AdsPage() {
+function AdsPage(query) {
   const [ads, setAds] = useState(null);
-  
-  let history = useHistory();
+  const history = useHistory();
 
   useEffect(() => {
     let error=null;
-    getLatestAds().then(setAds).catch(error);
+    getLatestAds(query).then(setAds).catch(error);
     return console.log(error ? error : 'Ads request completed');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [query]);
 
   const renderContent = () => {
     if (!ads) {

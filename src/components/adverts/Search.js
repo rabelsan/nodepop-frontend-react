@@ -52,13 +52,21 @@ function Search() {
   
   function handleClickSearch(event) {
     setSubmitting(true);
-    let queryName = form.name ? `&name=${form.name}`: '';
-    let querySale = '';
-    if (form.sale<3) {
-      querySale = (form.sale<2) ? `&sale=true` : `&sale=false`;
+    var searchParams = new URLSearchParams();
+    if (form.name) {
+      searchParams.append('name', form.name);
     }
-    let queryTags = (selTags.join(',').length) ? `&tags=${selTags.join(',')}`: '';
-    history.push(`/adverts?${queryName}${querySale}${queryTags}`);
+    if (form.sale<3) {
+      searchParams.append('sale', (form.sale<2) ? 'true' : 'false');
+    }
+    if (selTags.join(',').length) {
+      searchParams.append('tags', selTags.join(','));
+    }
+    if (searchParams.toString().length) {
+      history.push('/adverts?' + searchParams.toString());
+    } else {
+      history.push('/adverts');
+    } 
     setSubmitting(false);
   }
 
@@ -71,7 +79,11 @@ function Search() {
       <FlexBoxRow style={{border: '1px solid grey', padding: '5px'}}>
         <div>
           <p className="advert-item">Advert name</p>
-          <Input value={form.name} name="name" vale={form.name} onChange={handleChange} placeholder="Name filter" />
+          <Input  
+            name="name"
+            value={form.name}
+            onChange={handleChange} 
+            placeholder="Name filter" />
           <p className="advert-item">Price range ({minRange}-{maxRange}):</p>
           {/* <Range
             className='slider'
