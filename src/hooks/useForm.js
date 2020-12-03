@@ -4,7 +4,6 @@ function useForm(initialForm) {
   const [form, setForm] = useState(initialForm);
 
   const handleFormChange = event => {
-    //console.log(event.target.type);
     switch(event.target.type) {
       case ('text'):
       case ('password'):

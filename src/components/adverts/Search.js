@@ -15,11 +15,11 @@ const SliderTooltip = Slider.createSliderWithTooltip;
 const Range = SliderTooltip(Slider.Range);
 const { Option } = Select;
 const minRange = 0;
-const maxRange = 100000;
-let slider = [minRange,maxRange];
+const maxRange = 25000;
 
 function Search() {
-  const [form, handleChange] = useForm({name: '', slider: [], sale: 3});
+  const [form, handleChange] = useForm({name: '', sale: 3});
+  const [slider, setSlider] = useState([minRange, maxRange]);
   const [submitting, setSubmitting] = useState(false);
   const [apiTags, setApiTags] = useState(null);
   const [selTags, setSelTags] = useState([]);
@@ -51,7 +51,7 @@ function Search() {
   }
 
   function onSliderChange (value) {
-    form.slider=value;
+    setSlider(value);
   };
   
   function handleClickSearch(event) {
@@ -65,6 +65,10 @@ function Search() {
     }
     if (selTags.join(',').length) {
       searchParams.append('tags', selTags.join(','));
+    }
+    // Apply price filters only if user changes min/max limits
+    if (slider[0]>minRange || slider[1]<maxRange) {
+      searchParams.append('price',slider[0] + '-' + slider[1]);
     }
     if (searchParams.toString().length) {
       history.push('/adverts?' + searchParams.toString());
@@ -84,8 +88,8 @@ function Search() {
             value={form.name}
             onChange={handleChange} 
             placeholder="Name filter" />
-          <p className="advert-item">Price range ({minRange}-{maxRange}):</p>
-          {/* <Range
+          <p className="advert-item">Price (move to filter) [{minRange}-{maxRange}]:</p>
+          <Range
             className='slider'
             min={minRange}
             max={maxRange}
@@ -105,7 +109,7 @@ function Search() {
             trackStyle={{
               background: "none"
             }}
-          /> */}  
+          />  
         </div>
         <div>
           {/* <Radio name="sale" checked={form.sale} onChange={handleChange}>For sale</Radio> */}
