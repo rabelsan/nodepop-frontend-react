@@ -46,6 +46,10 @@ function Search() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiTags]);
 
+  function handleSelectChange(value) {
+    setSelTags(value);
+  }
+
   function onSliderChange (value) {
     form.slider=value;
   };
@@ -70,10 +74,6 @@ function Search() {
     setSubmitting(false);
   }
 
-  function handleSelectChange(value) {
-    setSelTags(value);
-  }
-  
   return (
     <div>
       <FlexBoxRow style={{border: '1px solid grey', padding: '5px'}}>
@@ -90,11 +90,9 @@ function Search() {
             min={minRange}
             max={maxRange}
             value={slider}
-            dots 
-            ticks
             onChange={onSliderChange}
             railStyle={{
-              height: 2
+              height: 3
             }}
             handleStyle={{  
               height: 20,
@@ -107,7 +105,7 @@ function Search() {
             trackStyle={{
               background: "none"
             }}
-          />  */}
+          /> */}  
         </div>
         <div>
           {/* <Radio name="sale" checked={form.sale} onChange={handleChange}>For sale</Radio> */}
