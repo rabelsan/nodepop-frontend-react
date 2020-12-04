@@ -7,8 +7,10 @@ export const login = crendentials =>
     const { token } = auth;
     if (crendentials.remember) {
       storage.set('auth', { token });
+      //storage.set('search', {name: '', sale: 3, price: [], tags: []});
     } else {
       storage.remove('auth');
+      storage.remove('search');
     }
     return auth.token;
   });

@@ -8,8 +8,10 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Button from '../../components/shared/Button';
 import useForm from '../../hooks/useForm';
+import storage from '../../utils/storage';
 
 import {FlexBoxCol, FlexBoxRow} from './styles.js';
+import './Search.css';
 
 const SliderTooltip = Slider.createSliderWithTooltip;
 const Range = SliderTooltip(Slider.Range);
@@ -18,11 +20,12 @@ const minRange = 0;
 const maxRange = 25000;
 
 function Search() {
-  const [form, handleChange] = useForm({name: '', sale: 3});
-  const [slider, setSlider] = useState([minRange, maxRange]);
+  let search = storage.get('search');
+  const [form, handleChange] = useForm({name: (search ? search.name : ''), sale: (search ? search.sale : 3)});
+  const [slider, setSlider] = useState(search ? search.price : [minRange, maxRange]);
   const [submitting, setSubmitting] = useState(false);
   const [apiTags, setApiTags] = useState(null);
-  const [selTags, setSelTags] = useState([]);
+  const [selTags, setSelTags] = useState(search ? search.tags : []);
   const [options, setOptions] = useState([]);
 
   let history = useHistory();
@@ -75,6 +78,10 @@ function Search() {
     } else {
       history.push('/adverts');
     } 
+    // If r'emember' selected in login .. save search options
+    if (storage.get('auth')) {
+      storage.set('search', {name: form.name,  sale: form.sale, price: slider, tags: selTags});
+    }
     setSubmitting(false);
   }
 
@@ -82,13 +89,13 @@ function Search() {
     <div>
       <FlexBoxRow style={{border: '1px solid grey', padding: '5px'}}>
         <div>
-          <p className="advert-item">Advert name</p>
+          <p className="search-item">Advert name</p>
           <Input  
             name="name"
             value={form.name}
             onChange={handleChange} 
             placeholder="Name filter" />
-          <p className="advert-item">Price (move to filter) [{minRange}-{maxRange}]:</p>
+          <p className="search-item">Price (move to filter) [{minRange}-{maxRange}]:</p>
           <Range
             className='slider'
             min={minRange}
@@ -96,7 +103,8 @@ function Search() {
             value={slider}
             onChange={onSliderChange}
             railStyle={{
-              height: 3
+              height: 3,
+              color: "blue"
             }}
             handleStyle={{  
               height: 20,
@@ -104,7 +112,7 @@ function Search() {
               marginLeft: 0,
               marginTop: -7,
               backgroundColor: "green",
-              border: 100
+              border: 150
             }}
             trackStyle={{
               background: "none"
@@ -113,19 +121,19 @@ function Search() {
         </div>
         <div>
           {/* <Radio name="sale" checked={form.sale} onChange={handleChange}>For sale</Radio> */}
-          <p>Sale/Buy/All ads</p>
+          <p className="search-item">For Sale/To Buy/All ads</p>
           <Radio.Group name="sale" onChange={handleChange} value={form.sale}>
             <Radio value={1}>For Sale</Radio>
             <Radio value={2}>To Buy</Radio>
             <Radio value={3}>All</Radio>
           </Radio.Group>
-          <p>Tags</p>
+          <p className="search-item">Tags</p>
           <Select
             mode="multiple"
             allowClear
             style={{ width: '250px' }}
             placeholder="Please select tags to filter"
-            defaultValue={[]}
+            defaultValue={selTags}
             onChange={handleSelectChange}
             maxTagTextLength="10"
           >

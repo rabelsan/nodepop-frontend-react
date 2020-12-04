@@ -5,6 +5,7 @@ import { getLatestAds } from '../../api/adverts';
 import Layout from '../layout';
 import Advert from './Advert';
 import Search from './Search';
+import storage from '../../utils/storage';
 
 import './AdsPage.css';
 
@@ -13,6 +14,7 @@ function AdsPage(query) {
   const history = useHistory();
 
   useEffect(() => {
+    console.log(storage.get('search'));
     let error=null;
     getLatestAds(query).then(setAds).catch(error);
     return console.log(error ? error : 'Ads request completed');
