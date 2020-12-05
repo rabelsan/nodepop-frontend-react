@@ -7,7 +7,6 @@ export const login = crendentials =>
     const { token } = auth;
     if (crendentials.remember) {
       storage.set('auth', { token });
-      //storage.set('search', {name: '', sale: 3, price: [], tags: []});
     } else {
       storage.remove('auth');
       storage.remove('search');
@@ -18,4 +17,5 @@ export const login = crendentials =>
 export const logout = () =>
   client.logout().then(() => {
     storage.remove('auth');
+    storage.remove('search');
   });

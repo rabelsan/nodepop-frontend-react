@@ -20,7 +20,7 @@ const Header = ({ className, ...props }) => {
       <nav className="header-nav">
         <Button
           as={Link}
-          to="/advert"
+          to="/advert/new"
           variant="primary"
           className="header-button"
         >

@@ -15,9 +15,10 @@ import './Search.css';
 
 const SliderTooltip = Slider.createSliderWithTooltip;
 const Range = SliderTooltip(Slider.Range);
-const { Option } = Select;
 const minRange = 0;
 const maxRange = 25000;
+const { Option } = Select;
+
 
 function Search() {
   let search = storage.get('search');
@@ -58,6 +59,7 @@ function Search() {
   };
   
   function handleClickSearch(event) {
+    event.preventDefault();
     setSubmitting(true);
     var searchParams = new URLSearchParams();
     if (form.name) {
@@ -87,63 +89,65 @@ function Search() {
 
   return (
     <div>
-      <FlexBoxRow style={{border: '1px solid grey', padding: '5px'}}>
-        <div>
-          <p className="search-item">Advert name</p>
-          <Input  
-            name="name"
-            value={form.name}
-            onChange={handleChange} 
-            placeholder="Name filter" />
-          <p className="search-item">Price (move to filter) [{minRange}-{maxRange}]:</p>
-          <Range
-            className='slider'
-            min={minRange}
-            max={maxRange}
-            value={slider}
-            onChange={onSliderChange}
-            railStyle={{
-              height: 3,
-              color: "blue"
-            }}
-            handleStyle={{  
-              height: 20,
-              width: 20,
-              marginLeft: 0,
-              marginTop: -7,
-              backgroundColor: "green",
-              border: 150
-            }}
-            trackStyle={{
-              background: "none"
-            }}
-          />  
-        </div>
-        <div>
-          {/* <Radio name="sale" checked={form.sale} onChange={handleChange}>For sale</Radio> */}
-          <p className="search-item">For Sale/To Buy/All ads</p>
-          <Radio.Group name="sale" onChange={handleChange} value={form.sale}>
-            <Radio value={1}>For Sale</Radio>
-            <Radio value={2}>To Buy</Radio>
-            <Radio value={3}>All</Radio>
-          </Radio.Group>
-          <p className="search-item">Tags</p>
-          <Select
-            mode="multiple"
-            allowClear
-            style={{ width: '250px' }}
-            placeholder="Please select tags to filter"
-            defaultValue={selTags}
-            onChange={handleSelectChange}
-            maxTagTextLength="10"
-          >
-            {options}
-          </Select>
-        </div>
-      </FlexBoxRow>
-      <FlexBoxCol>
-        <Button variant="primary" onClick={handleClickSearch} disable={!submitting}> Search</Button>
-      </FlexBoxCol>
+      <form onSubmit={handleClickSearch}>
+        <FlexBoxRow style={{border: "1px solid grey", padding: "5px"}}>
+          <div>
+            <p className="search-item">Advert name</p>
+            <Input  
+              name="name"
+              value={form.name}
+              style={{ width: '250px' }}
+              onChange={handleChange} 
+              placeholder="Name filter" />
+            <p className="search-item">Price (move to filter) [{minRange}-{maxRange}]</p>
+            <Range
+              className='slider'
+              min={minRange}
+              max={maxRange}
+              value={slider}
+              onChange={onSliderChange}
+              railStyle={{
+                height: 3,
+                color: "blue"
+              }}
+              handleStyle={{  
+                height: 20,
+                width: 20,
+                marginLeft: 0,
+                marginTop: -7,
+                backgroundColor: "green",
+                border: 150
+              }}
+              trackStyle={{
+                background: "none"
+              }}
+            />  
+          </div>
+          <div>
+            <p className="search-item">For Sale/To Buy/All</p>
+            <Radio.Group name="sale" onChange={handleChange} value={form.sale}>
+              <Radio value={1}>For Sale</Radio>
+              <Radio value={2}>To Buy</Radio>
+              <Radio value={3}>All</Radio>
+            </Radio.Group>
+            <p className="search-item">Tags</p>
+            <Select
+              mode="multiple"
+              allowClear
+              style={{ width: '250px' }}
+              placeholder="Please select tags to filter"
+              defaultValue={selTags}
+              onChange={handleSelectChange}
+              maxTagTextLength="10"
+            >
+              {options}
+            </Select>
+          </div>
+        </FlexBoxRow>
+        <FlexBoxCol>
+          <Button type="submit" variant="primary" disable={!submitting}> Search</Button>
+        </FlexBoxCol>
+      </form>
     </div>
   );
 }

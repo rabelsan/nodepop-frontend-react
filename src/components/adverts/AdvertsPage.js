@@ -5,16 +5,14 @@ import { getLatestAds } from '../../api/adverts';
 import Layout from '../layout';
 import Advert from './Advert';
 import Search from './Search';
-import storage from '../../utils/storage';
 
-import './AdsPage.css';
+import './AdvertsPage.css';
 
-function AdsPage(query) {
+function AdvertsPage(query) {
   const [ads, setAds] = useState(null);
   const history = useHistory();
 
   useEffect(() => {
-    console.log(storage.get('search'));
     let error=null;
     getLatestAds(query).then(setAds).catch(error);
     return console.log(error ? error : 'Ads request completed');
@@ -40,4 +38,4 @@ function AdsPage(query) {
   );
 }
 
-export default AdsPage;
+export default AdvertsPage;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../layout';
-import Button from '../../components/shared/Button';
+import Button from '../shared/Button';
 import { Modal, Popconfirm } from 'antd';
 import 'antd/dist/antd.css';
 
@@ -8,9 +8,9 @@ import { getAdDetail } from '../../api/adverts';
 import { deleteAd } from '../../api/adverts';
 
 import {FlexBoxCol} from './styles.js';
-import './AdPage.css';
+import './AdvertPage.css';
 
-function AdPage (props) {
+function AdvertPage (props) {
   const { adId } = props.match.params;
   const [ad, setAd] = useState(null);
   const [error, setError] = useState(null);
@@ -23,16 +23,18 @@ function AdPage (props) {
   }, []);
 
   function handleClickDelete(event) {
-    deleteAd(adId).then(setAd).catch(setError);
-    console.log(error ? error : `Ad ${adId} deleted`);
-    success();
-    props.history.push('/adverts');
+    deleteAd(adId).then( resolve => { 
+      props.history.push('/adverts');
+    }).catch( reject => {
+      setError(reject);
+      failure();
+    });
   }
 
-  function success() {
-    Modal.success({
-      title: 'Delete advert',
-      content: `Advert '${ad.result.name}', deleted!`,
+  function failure(reject) {
+    Modal.failure({
+      title: 'Delete advert rejected',
+      content: `Error: '${error}`,
       destroyOnClose: true,
     });
   }
@@ -81,4 +83,4 @@ function AdPage (props) {
   );
 }
 
-export default AdPage;
+export default AdvertPage;

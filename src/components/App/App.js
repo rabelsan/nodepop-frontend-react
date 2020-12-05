@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import T from 'prop-types';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 
-import AdsPage from '../adverts/AdsPage';
-import AdPage from '../adverts/AdPage';
-import AdTags from '../adverts/AdTags';
-import NewAdPage from '../adverts/NewAdPage';
+import AdvertsPage from '../adverts/AdvertsPage';
+import AdvertPage from '../adverts/AdvertPage';
+import AdvertTags from '../adverts/AdvertTags';
+import NewAdvertPage from '../adverts/NewAdvertPage';
 import LoginPage from '../auth/LoginPage';
 import PrivateRoute from '../auth/PrivateRoute';
 import { AuthContextProvider } from '../auth/context';
@@ -37,14 +37,14 @@ function App ({ initiallyLoggedUserId }) {
             <Redirect to="/adverts" />
           </PrivateRoute>
           <PrivateRoute path="/adverts" exact>
-            <AdsPage query={pathname + search}/>
+            <AdvertsPage query={pathname + search}/>
           </PrivateRoute>
-          <PrivateRoute path="/adverts/tags" exact component={AdTags}/>
-          <PrivateRoute path="/adverts/:adId" exact component={AdPage} />
-          <PrivateRoute path="/newAd" exact>
-            <NewAdPage />
+          <PrivateRoute path="/advert/new" exact>
+            <NewAdvertPage />
           </PrivateRoute>
-          <Route path="/login" exact>
+          <PrivateRoute path="/adverts/tags" exact component={AdvertTags}/>
+          <PrivateRoute path="/advert/:adId" exact component={AdvertPage} />
+           <Route path="/login" exact>
             {({ history }) => (
               <LoginPage onLogin={handleLogin} history={history} />
             )}

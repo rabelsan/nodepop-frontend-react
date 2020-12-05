@@ -11,7 +11,7 @@ const { Meta } = Card;
 const Advert = ({ photo, name,  price, tags, sale, _id, history }) => (
   <article
     className="advert"
-    onClick={() => history.push(`/adverts/${_id}`)}
+    onClick={() => history.push(`/advert/${_id}`)}
   >
     <div className="site-card-wrapper">
       <Card style={{backgroundColor: 'rgb(98,  189, 89)'}}>
