@@ -22,8 +22,8 @@ function AdvertPage (props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleClickDelete(event) {
-    deleteAd(adId).then( resolve => { 
+  const handleClickDelete = (event) => {
+    deleteAd(adId).then( resolve => {
       props.history.push('/adverts');
     }).catch( reject => {
       setError(reject);
@@ -31,8 +31,8 @@ function AdvertPage (props) {
     });
   }
 
-  function failure(reject) {
-    Modal.failure({
+  const failure = (reject) => {
+    Modal.success({
       title: 'Delete advert rejected',
       content: `Error: '${error}`,
       destroyOnClose: true,

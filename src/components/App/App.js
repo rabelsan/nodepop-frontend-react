@@ -33,17 +33,17 @@ function App ({ initiallyLoggedUserId }) {
     >
       <div className="App">
         <Switch>
+        <PrivateRoute path="/advert/new" exact>
+            <NewAdvertPage />
+          </PrivateRoute>
+          <PrivateRoute path="/advert/:adId" exact component={AdvertPage} />
           <PrivateRoute path="/" exact>
             <Redirect to="/adverts" />
           </PrivateRoute>
           <PrivateRoute path="/adverts" exact>
             <AdvertsPage query={pathname + search}/>
           </PrivateRoute>
-          <PrivateRoute path="/advert/new" exact>
-            <NewAdvertPage />
-          </PrivateRoute>
           <PrivateRoute path="/adverts/tags" exact component={AdvertTags}/>
-          <PrivateRoute path="/advert/:adId" exact component={AdvertPage} />
            <Route path="/login" exact>
             {({ history }) => (
               <LoginPage onLogin={handleLogin} history={history} />
