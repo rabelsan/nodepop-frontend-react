@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { getAdsTags, createAd } from '../../api/adverts';
@@ -28,7 +28,6 @@ const tailLayout = {
 
 const NewAdvertPage = () => {
   const [form] = Form.useForm();
-  const imgRef = createRef();
   const [submitting, setSubmitting] = useState(false);
   const [apiTags, setApiTags] = useState(null);
   const [options, setOptions] = useState([]);
@@ -65,7 +64,8 @@ const NewAdvertPage = () => {
 
   const onFinish = (values) => {
     setSubmitting(true);
-    values.photo = imgRef.src;
+    console.log(imgRef.current);
+    values.photo = upload.selectedFile.name;
     console.log(values);
     createAd(values).then( resolve => {
       history.push(`/advert/${resolve.result._id}`);
@@ -174,7 +174,6 @@ const NewAdvertPage = () => {
             name="photo"
           >
             <Image
-              ref = {imgRef}
               style={{ margin: '0px 15px' }}
               width={200}
               height={200}
