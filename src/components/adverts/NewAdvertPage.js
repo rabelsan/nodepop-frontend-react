@@ -64,9 +64,8 @@ const NewAdvertPage = () => {
 
   const onFinish = (values) => {
     setSubmitting(true);
-    console.log(imgRef.current);
-    values.photo = upload.selectedFile.name;
-    console.log(values);
+    console.log(upload.selectFileList);
+    values.photo = upload.selectedFile;
     createAd(values).then( resolve => {
       history.push(`/advert/${resolve.result._id}`);
     }).catch( reject => {
@@ -76,7 +75,7 @@ const NewAdvertPage = () => {
   };
 
   const failure = (reject) => {
-    Modal.failure({
+    Modal.error({
       title: 'New advert failure',
       content: `Sorry, internal error: '${reject}`,
       destroyOnClose: true,

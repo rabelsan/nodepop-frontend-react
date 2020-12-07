@@ -17,7 +17,6 @@ export const getAdDetail = adId => {
 
 export const createAd = ad => {
   const url = `/adverts`;
-  console.log(ad);
   return client.post(url, ad);
 };
 
