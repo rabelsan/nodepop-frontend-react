@@ -36,7 +36,10 @@ const NewAdvertPage = () => {
     selectedFile: null,
     selectedFileList: [],
   });
-  const [photo, setPhoto] = useState(defaultImg);
+  const [photo, setPhoto] = useState({
+    file: null, 
+    result: defaultImg,
+  });
 
   let history = useHistory();
   let children = [];
@@ -64,9 +67,13 @@ const NewAdvertPage = () => {
 
   const onFinish = (values) => {
     setSubmitting(true);
-    console.log(upload.selectFileList);
-    values.photo = upload.selectedFile;
-    createAd(values).then( resolve => {
+    const formData = new FormData();
+    formData.append('name', values.name);
+    formData.append('sale', values.sale);
+    formData.append('price', values.price);
+    values.tags.forEach((tag, index) => formData.append(`tags[${index}]`, tag));
+    if (photo.file) formData.append('photo', photo.file);
+    createAd(formData).then( resolve => {
       history.push(`/advert/${resolve.result._id}`);
     }).catch( reject => {
       failure(reject);
@@ -77,7 +84,7 @@ const NewAdvertPage = () => {
   const failure = (reject) => {
     Modal.error({
       title: 'New advert failure',
-      content: `Sorry, internal error: '${reject}`,
+      content: `Sorry, advert not created. Try again.`,
       destroyOnClose: true,
     });
   }
@@ -176,7 +183,7 @@ const NewAdvertPage = () => {
               style={{ margin: '0px 15px' }}
               width={200}
               height={200}
-              src={photo}
+              src={photo.result}
               fallback={defaultImg}
             />
           </Form.Item>
@@ -191,7 +198,7 @@ const NewAdvertPage = () => {
             beforeUpload={file => {
               const reader = new FileReader();
               reader.onload = e => {
-                  setPhoto(e.target.result);
+                  setPhoto({file: file, result: e.target.result});
               };
               reader.readAsDataURL(file);
           }}
